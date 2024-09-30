@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { TodoEntity } from "../entities/todo.enty";
 import { Repository } from "typeorm";
@@ -15,8 +15,15 @@ export class TodoService {
     return this.TodoEntityRepository.find();
   }
 
-  findOne(id: number): Promise<TodoEntity> {
-    return this.TodoEntityRepository.findOneBy({ id });
+  async findOne(id: number): Promise<TodoEntity> {
+    const todo = await this.TodoEntityRepository.findOneBy({ id });
+    if (!todo) {
+      throw new NotFoundException(
+        `Todo with ID ${id} not found`,
+        "Custom Error Code",
+      );
+    }
+    return todo;
   }
 
   async update(
@@ -41,6 +48,6 @@ export class TodoService {
   }
 
   async create(todo: TodoEntity): Promise<TodoEntity> {
-    return this.TodoEntityRepository.create(todo);
+    return this.TodoEntityRepository.save(todo);
   }
 }

@@ -12,7 +12,7 @@ import { TodoService } from "../services/todo.service";
 import { TodoEntity } from "../entities/todo.enty";
 
 @Controller("todos")
-export class totoController {
+export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Get()

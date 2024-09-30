@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Column, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+@Entity({ name: "todos" })
 export class TodoEntity {
   @PrimaryGeneratedColumn()
   id: number;
